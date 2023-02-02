@@ -2,6 +2,7 @@ import path = require("path");
 import * as vscode from "vscode";
 
 
+
 import {
   LanguageClient,
   LanguageClientOptions,
@@ -24,11 +25,11 @@ export class BallerinaExtension {
   async init(): Promise<void> {
     try {
       //Server options. LS client will use these options to start the LS.
-      let serverOptions: ServerOptions = getServerOptions();
+      let serverOptions: ServerOptions = getServerOptions(this.context as vscode.ExtensionContext);
 
       //creating the language client.
       let clientId = "ballerina-vscode-lsclient";
-      let clientName = "Ballerina LS Client";
+      let clientName = "Ballerina LS Cli  ent";
       let clientOptions: LanguageClientOptions = {
         documentSelector: [{ scheme: "file", language: "ballerina" }],
         outputChannel: outputChannel,
@@ -64,12 +65,13 @@ export class BallerinaExtension {
 }
 
 //Create a command to be run to start the LS java process.
-function getServerOptions() {
+function getServerOptions(context: vscode.ExtensionContext) {
   //Change the project home accordingly.
  
-  const LS_HOME = path.join('C:','Users','vkozh','Documents','projects','ballerina-language-client','ballerina','jars','lang-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar');
+  //const LS_HOME = path.join('C:','Users','vkozh','Documents','projects','ballerina-language-client','ballerina','jars','lang-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar');
+  const LS_HOME =  path.resolve(context.extensionPath,'jars','lang-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar');
   const JAVA_HOME = process.env.JAVA_HOME;
-
+ 
   let executable: string = path.join(String(JAVA_HOME), "bin", "java");
   let args: string[] = ["-jar", LS_HOME];
 
