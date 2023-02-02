@@ -1,12 +1,11 @@
 import path = require("path");
 import * as vscode from "vscode";
-import {
-  LanguageClientOptions,
-  RevealOutputChannelOn,
-} from "vscode-languageclient";
+
 
 import {
   LanguageClient,
+  LanguageClientOptions,
+  RevealOutputChannelOn,
   ServerOptions,
   State,
 } from "vscode-languageclient/node";
@@ -25,7 +24,7 @@ export class BallerinaExtension {
   async init(): Promise<void> {
     try {
       //Server options. LS client will use these options to start the LS.
-      let serverOptions: ServerOptions = getServerOptions((this.context as vscode.ExtensionContext).extensionPath);
+      let serverOptions: ServerOptions = getServerOptions();
 
       //creating the language client.
       let clientId = "ballerina-vscode-lsclient";
@@ -57,10 +56,7 @@ export class BallerinaExtension {
       );
 
       let disposable = this.languageClient.start();
-    //   this.languageClient.onReady().then(() => {
-    //     disposeDidChange.dispose();
-    //     this.context!.subscriptions.push(disposable);
-    //   });
+      
     } catch (exception) {
       return Promise.reject("Extension error!");
     }
@@ -68,11 +64,10 @@ export class BallerinaExtension {
 }
 
 //Create a command to be run to start the LS java process.
-function getServerOptions(extensionPath:string) {
+function getServerOptions() {
   //Change the project home accordingly.
-  //const PROJECT_HOME = "/home/malintha/Documents/wso2/projects";
-  //const LS_LIB = "lsp-tutorial/ballerina-language-server/language_server_lib/*";
-  const LS_HOME = path.join(extensionPath,'-jar','lang-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar' );
+ 
+  const LS_HOME = path.join('C:','Users','vkozh','Documents','projects','ballerina-language-client','ballerina','jars','lang-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar');
   const JAVA_HOME = process.env.JAVA_HOME;
 
   let executable: string = path.join(String(JAVA_HOME), "bin", "java");
