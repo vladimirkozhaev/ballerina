@@ -70,9 +70,9 @@ function getServerOptions(context: vscode.ExtensionContext) {
  
   //const LS_HOME = path.join('C:','Users','vkozh','Documents','projects','ballerina-language-client','ballerina','jars','lang-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar');
   const LS_HOME =  path.resolve(context.extensionPath,'jars','lang-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar');
-  const JAVA_HOME = process.env.JAVA_HOME;
+  
  
-  let executable: string = path.join(String(JAVA_HOME), "bin", "java");
+  let executable: string =   'java'; //path.join(String(JAVA_HOME), "bin", "java");
   let args: string[] = ["-jar", LS_HOME];
 
   let serverOptions: ServerOptions = {
